@@ -1,4 +1,3 @@
-
 const cursor = document.querySelector('.custom-cursor.site-wide');
 
 
@@ -9,17 +8,6 @@ document.addEventListener('mouseenter', function() {
 
 document.addEventListener('mouseleave', function() {
     cursor.style.display = 'none';
-    
-});
-
-document.addEventListener('mousemove', trackCursor);
-
-document.addEventListener('mousedown', function() {
-    cursor.classList.add('active');
-});
-
-document.addEventListener('mouseup', function() {
-    cursor.classList.remove('active');
 });
 
 function trackCursor(e) {
@@ -27,3 +15,19 @@ function trackCursor(e) {
     const height = cursor.clientHeight;
     cursor.style.transform = `translate(${e.clientX - width/2}px, ${e.clientY - height/2}px)`;
 }
+
+let stopMouse;
+
+document.addEventListener('mousemove', function (e) {
+    trackCursor(e);
+
+    cursor.classList.remove('active');
+    clearTimeout(stopMouse);
+
+    stopMouse = setTimeout(function() {
+        cursor.classList.add('active'); 
+    }, 150);
+    
+});
+
+
